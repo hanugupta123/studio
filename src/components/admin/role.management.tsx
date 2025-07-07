@@ -64,7 +64,7 @@ export function RoleManagement({
   const filteredUsers = users.filter((user) => {
     const matchesSearch =
       user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase());
+      user.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesRole =
       roleFilter === "all" || user.roles?.includes(roleFilter);
 

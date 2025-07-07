@@ -432,9 +432,9 @@ export default function AdminPage() {
       if (planFilter !== "all") {
         if (planFilter === "free") planMatch = !u.isPlusSubscriber;
         else if (planFilter === "plus_unknown")
-          planMatch = u.isPlusSubscriber && !u.subscriptionPlan;
+          planMatch = (u.isPlusSubscriber ?? false) && !u.subscriptionPlan;
         else
-          planMatch = u.isPlusSubscriber && u.subscriptionPlan === planFilter;
+          planMatch = !!u.isPlusSubscriber && u.subscriptionPlan === planFilter;
       }
 
       const adminMatch =
@@ -453,10 +453,10 @@ export default function AdminPage() {
           const userJoinedDate = startOfDay(parseISO(u.createdAt));
           const from = dateRangeFilter.from
             ? startOfDay(dateRangeFilter.from)
-            : new Date(0); // Beginning of time
+            : new Date(0); 
           const to = dateRangeFilter.to
             ? startOfDay(dateRangeFilter.to)
-            : new Date(); // Today
+            : new Date();
           dateMatch = isWithinInterval(userJoinedDate, {
             start: from,
             end: to,
@@ -467,7 +467,7 @@ export default function AdminPage() {
             u.uid,
             u.createdAt
           );
-          dateMatch = false; // Or true, depending on desired behavior for unparseable dates
+          dateMatch = false;
         }
       }
       return (
